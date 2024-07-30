@@ -1,0 +1,49 @@
+.main{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.main .box{
+    width: 100%;
+    max-width: 850px;
+    background-color: #fff;
+    padding: 20px;
+    margin: 25px 8px;
+}
+
+.main .box .nav{
+    width: 100%;
+    background-color: #333;
+    padding: 15px;
+}
+
+.main .box .nav ul{
+    display: flex;
+    list-style-type: none;
+    gap: 28px;
+}
+
+.main .box .nav ul li {
+    cursor: pointer;
+    font-size: 16px;
+    color: #fff;
+}
+
+.main .box .content{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.main .box .content .title{
+    width: 100%;
+    margin: 20px 0;
+}
+
+.main .box .content .featureImage{
+    width: 100%;
+    height: auto;
+}
+
