@@ -22,12 +22,10 @@ const Post = (post) => {
 
             <div className={styles.nav}>
                 <ul>
-
                     <li><a>Home</a></li>
                     <li><a>News</a></li>
                     <li><a>Contact</a></li>
                     <li><a>About</a></li>
-
                 </ul>
             </div>
             <div className={styles.content}>
