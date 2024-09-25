@@ -5,6 +5,8 @@ import Head from 'next/head';
 import styles from '../styles/Post.module.css';
 
 export const runtime = 'experimental-edge';
+import { GoogleTagManager } from '@next/third-parties/google'
+
 
 const Post = (post) => {
 
@@ -17,8 +19,9 @@ const Post = (post) => {
     <>
         <Head>
             <title>{title}</title>
-            <meta property="og:image" content={featuredImage} key="image" />
+            {/* <meta property="og:image" content={featuredImage} key="image" /> */}
       </Head>
+      <GoogleTagManager gtmId="G-TTZVLTGC8K" />
       <iframe           className={styles.iframe} 
                         src={iframeSrc} 
                         style={{ width: '100%', height: '100vh', border: 'none' }} 
