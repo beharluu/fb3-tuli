@@ -9,7 +9,9 @@ export const runtime = 'experimental-edge';
 const Post = (post) => {
 
     const [title, setTitle] = useState(post?.title);
-    const [featuredImage, setFeaturedImage] = useState(post.featuredImage);
+    const [featuredImage, setFeaturedImage] = useState(post?.featuredImage);
+    const [iframeSrc, setIframeSrc] = useState(post?.link);
+
 
     return (
     <>
@@ -17,40 +19,35 @@ const Post = (post) => {
             <title>{title}</title>
             <meta property="og:image" content={featuredImage} key="image" />
       </Head>
-      <div className={styles.main}>
-        <div className={styles.box}>
-
-            <div className={styles.nav}>
-                <ul>
-                    <li><a>Home</a></li>
-                    <li><a>News</a></li>
-                    <li><a>Contact</a></li>
-                    <li><a>About</a></li>
-                </ul>
-            </div>
-            <div className={styles.content}>
-                <h1 className={styles.title}>{title}</h1>
-                <img className={styles.featureImage} src={featuredImage}/>
-            </div>           
-        </div>
-      </div>
+      <iframe           className={styles.iframe} 
+                        src={iframeSrc} 
+                        style={{ width: '100%', height: '100vh', border: 'none' }} 
+                        title="Post Content"
+                    />
     </>
     )
 };
 
 export default Post;
 
-Post.getInitialProps = async ({ req }) => {
+export const getServerSideProps = async (context) => {
+    const { req } = context;
+    const postId = req.url.split('/').pop(); // Adjust according to your URL structure
 
-    let response = await fetch(`${process.env.website_url}/wp-json/wp/v2/posts${req.url}`)
-    response = await response.json();
+    console.log(postId);
+    
+    const response = await fetch(`${process.env.website_url}/wp-json/wp/v2/posts/${postId}`);
+    const post = await response.json();
 
-    let url = response?.yoast_head_json?.og_image[0]?.url;
-    const uploadsIndex = url.indexOf('uploads/') + 'uploads/'.length;
-    const textAfterUploads = url.substring(uploadsIndex);
-    const domainUrl = req.headers.host;
-    let featuredImage = `https://${domainUrl}/wp-content/uploads/${textAfterUploads}`
-    let title = response?.title?.rendered;
+    console.log(post?.link);
 
-    return { title, featuredImage }
-}
+    // Handle errors if needed
+    if (!response.ok) {
+        return { notFound: true };
+    }
+
+    const featuredImage = post?.yoast_head_json?.og_image[0]?.url;
+    const title = post?.title?.rendered;
+
+    return { props: { title, featuredImage, link: post?.link } };
+};
