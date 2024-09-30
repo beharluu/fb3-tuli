@@ -1,34 +1,55 @@
-import React from "react";
-import { useState } from 'react';
+import React, { useEffect, useState } from "react";
 import Head from 'next/head';
-
+import Script from 'next/script';
 import styles from '../styles/Post.module.css';
 
-export const runtime = 'experimental-edge';
-import { GoogleTagManager } from '@next/third-parties/google'
+const Post = ({ title, featuredImage, link }) => {
+    const [iframeSrc, setIframeSrc] = useState(link);
 
-
-const Post = (post) => {
-
-    const [title, setTitle] = useState(post?.title);
-    const [featuredImage, setFeaturedImage] = useState(post?.featuredImage);
-    const [iframeSrc, setIframeSrc] = useState(post?.link);
-
+    useEffect(() => {
+        // Track the page view with Google Analytics
+        if (window.gtag) {
+            window.gtag('config', 'G-TTZVLTGC8K', {
+                page_path: window.location.pathname,
+            });
+        }
+    }, []); // Empty dependency array means this runs once when the component mounts
 
     return (
-    <>
-        <Head>
-            <title>{title}</title>
-            <meta property="og:image" content={featuredImage} key="image" />
-      </Head>
-      <GoogleTagManager gtmId="G-TTZVLTGC8K" />
-      <iframe           className={styles.iframe} 
-                        src={iframeSrc} 
-                        style={{ width: '100%', height: '100vh', border: 'none' }} 
-                        title="Post Content"
-                    />
-    </>
-    )
+        <>
+            <Head>
+                <title>{title}</title>
+                <meta property="og:image" content={featuredImage} key="image" />
+
+                <Script
+                    id="google-analytics"
+                    strategy="afterInteractive"
+                    async
+                    src="https://www.googletagmanager.com/gtag/js?id=G-TTZVLTGC8K"
+                />
+                
+                <Script
+                    id="google-analytics-config"
+                    strategy="afterInteractive"
+                >
+                    {`
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+                        gtag('config', 'G-TTZVLTGC8K', {
+                            page_path: window.location.pathname,
+                        });
+                    `}
+                </Script>
+            </Head>
+            <iframe
+                className={styles.iframe} 
+                src={iframeSrc} 
+                style={{ width: '100%', height: '100vh', border: 'none' }} 
+                title="Post Content"
+            />
+        </>
+    );
 };
 
 export default Post;
@@ -37,12 +58,8 @@ export const getServerSideProps = async (context) => {
     const { req } = context;
     const postId = req.url.split('/').pop(); // Adjust according to your URL structure
 
-    console.log(postId);
-    
     const response = await fetch(`${process.env.website_url}/wp-json/wp/v2/posts/${postId}`);
     const post = await response.json();
-
-    console.log(post?.link);
 
     // Handle errors if needed
     if (!response.ok) {
