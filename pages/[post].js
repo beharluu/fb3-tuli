@@ -20,28 +20,30 @@ const Post = ({ title, featuredImage, link }) => {
             <Head>
                 <title>{title}</title>
                 <meta property="og:image" content={featuredImage} key="image" />
-
-                <Script
-                    id="google-analytics"
-                    strategy="afterInteractive"
-                    async
-                    src="https://www.googletagmanager.com/gtag/js?id=G-TTZVLTGC8K"
-                />
-                
-                <Script
-                    id="google-analytics-config"
-                    strategy="afterInteractive"
-                >
-                    {`
-                        window.dataLayer = window.dataLayer || [];
-                        function gtag(){dataLayer.push(arguments);}
-                        gtag('js', new Date());
-                        gtag('config', 'G-TTZVLTGC8K', {
-                            page_path: window.location.pathname,
-                        });
-                    `}
-                </Script>
             </Head>
+
+            {/* Google Analytics scripts moved outside of Head */}
+            <Script
+                id="google-analytics"
+                strategy="afterInteractive"
+                async
+                src="https://www.googletagmanager.com/gtag/js?id=G-TTZVLTGC8K"
+            />
+            
+            <Script
+                id="google-analytics-config"
+                strategy="afterInteractive"
+            >
+                {`
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+                    gtag('config', 'G-TTZVLTGC8K', {
+                        page_path: window.location.pathname,
+                    });
+                `}
+            </Script>
+
             <iframe
                 className={styles.iframe} 
                 src={iframeSrc} 
