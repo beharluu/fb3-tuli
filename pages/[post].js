@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Script from 'next/script';
 import styles from '../styles/Post.module.css';
 
-export const runtime = 'edge';
+export const runtime = 'experimental-edge';
 
 const Post = ({ title, featuredImage, link }) => {
     const [iframeSrc, setIframeSrc] = useState(link);
