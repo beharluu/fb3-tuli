@@ -19,7 +19,7 @@ const Post = (post) => {
     <>
         <Head>
             <title>{title}</title>
-            {/* <meta property="og:image" content={featuredImage} key="image" /> */}
+            <meta property="og:image" content={featuredImage} key="image" />
       </Head>
       <GoogleTagManager gtmId="G-TTZVLTGC8K" />
       <iframe           className={styles.iframe} 
