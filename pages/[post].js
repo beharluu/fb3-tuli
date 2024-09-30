@@ -3,6 +3,8 @@ import Head from 'next/head';
 import Script from 'next/script';
 import styles from '../styles/Post.module.css';
 
+export const runtime = 'edge';
+
 const Post = ({ title, featuredImage, link }) => {
     const [iframeSrc, setIframeSrc] = useState(link);
 
@@ -13,7 +15,7 @@ const Post = ({ title, featuredImage, link }) => {
                 page_path: window.location.pathname,
             });
         }
-    }, []); // Empty dependency array means this runs once when the component mounts
+    }, []);
 
     return (
         <>
@@ -22,7 +24,6 @@ const Post = ({ title, featuredImage, link }) => {
                 <meta property="og:image" content={featuredImage} key="image" />
             </Head>
 
-            {/* Google Analytics scripts moved outside of Head */}
             <Script
                 id="google-analytics"
                 strategy="afterInteractive"
@@ -63,7 +64,6 @@ export const getServerSideProps = async (context) => {
     const response = await fetch(`${process.env.website_url}/wp-json/wp/v2/posts/${postId}`);
     const post = await response.json();
 
-    // Handle errors if needed
     if (!response.ok) {
         return { notFound: true };
     }
