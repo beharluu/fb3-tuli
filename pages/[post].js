@@ -11,7 +11,7 @@ const Post = ({ title, featuredImage, link }) => {
     useEffect(() => {
         // Track the page view with Google Analytics
         if (window.gtag) {
-            window.gtag('config', 'G-TTZVLTGC8K', {
+            window.gtag('config', 'G-8FW7SEJFZ7', {
                 page_path: window.location.pathname,
             });
         }
@@ -28,7 +28,7 @@ const Post = ({ title, featuredImage, link }) => {
                 id="google-analytics"
                 strategy="afterInteractive"
                 async
-                src="https://www.googletagmanager.com/gtag/js?id=G-TTZVLTGC8K"
+                src="https://www.googletagmanager.com/gtag/js?id=G-8FW7SEJFZ7"
             />
             
             <Script
@@ -39,7 +39,7 @@ const Post = ({ title, featuredImage, link }) => {
                     window.dataLayer = window.dataLayer || [];
                     function gtag(){dataLayer.push(arguments);}
                     gtag('js', new Date());
-                    gtag('config', 'G-TTZVLTGC8K', {
+                    gtag('config', 'G-8FW7SEJFZ7', {
                         page_path: window.location.pathname,
                     });
                 `}
