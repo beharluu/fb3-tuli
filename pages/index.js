@@ -1,7 +1,10 @@
 import Head from 'next/head';
 import { Inter } from 'next/font/google';
+import styles from '../styles/Post.module.css';
 
 const inter = Inter({ subsets: ['latin'] });
+export const runtime = 'experimental-edge';
+
 
 export default function Home() {
   return (
@@ -14,10 +17,15 @@ export default function Home() {
 
       </Head>
       
-      
 
       <main>
         {/* Your main content here */}
+        <iframe
+                className={styles.iframe} 
+                src={`${process.env.website_url}`} 
+                style={{ width: '100%', height: '100vh', border: 'none' }} 
+                title="Post Content"
+            />
       </main>
     </>
   );
