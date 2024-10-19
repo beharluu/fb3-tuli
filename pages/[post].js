@@ -6,17 +6,6 @@ import styles from '../styles/Post.module.css';
 export const runtime = 'experimental-edge';
 
 const Post = ({ title, featuredImage, link }) => {
-    const [iframeSrc, setIframeSrc] = useState(link);
-
-    useEffect(() => {
-        // Track the page view with Google Analytics
-        if (window.gtag) {
-            window.gtag('config', 'G-TTZVLTGC8K', {
-                page_path: window.location.pathname,
-            });
-        }
-    }, []);
-
     return (
         <>
             <Head>
@@ -24,30 +13,23 @@ const Post = ({ title, featuredImage, link }) => {
                 <meta property="og:image" content={featuredImage} key="image" />
             </Head>
 
+            {/* Google Analytics tag */}
             <Script
-                id="google-analytics"
-                strategy="afterInteractive"
                 async
-                src="https://www.googletagmanager.com/gtag/js?id=G-TTZVLTGC8K"
+                src="https://www.googletagmanager.com/gtag/js?id=UA-259782120-1"
             />
-            
-            <Script
-                id="google-analytics-config"
-                strategy="afterInteractive"
-            >
+            <Script id="google-analytics-config" strategy="afterInteractive">
                 {`
                     window.dataLayer = window.dataLayer || [];
                     function gtag(){dataLayer.push(arguments);}
                     gtag('js', new Date());
-                    gtag('config', 'G-TTZVLTGC8K', {
-                        page_path: window.location.pathname,
-                    });
+                    gtag('config', 'UA-259782120-1');
                 `}
             </Script>
 
             <iframe
-                className={styles.iframe} 
-                src={iframeSrc} 
+                className={styles.iframe}
+                src={link} 
                 style={{ width: '100%', height: '100vh', border: 'none' }} 
                 title="Post Content"
             />
