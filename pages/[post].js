@@ -16,14 +16,14 @@ const Post = ({ title, featuredImage, link }) => {
             {/* Google Analytics tag */}
             <Script
                 async
-                src="https://www.googletagmanager.com/gtag/js?id=G-7CTLS8MJKB"
+                src="https://www.googletagmanager.com/gtag/js?id=UA-259782120-1"
             />
             <Script id="google-analytics-config" strategy="afterInteractive">
                 {`
                     window.dataLayer = window.dataLayer || [];
                     function gtag(){dataLayer.push(arguments);}
                     gtag('js', new Date());
-                    gtag('config', 'G-7CTLS8MJKB');
+                    gtag('config', 'UA-259782120-1');
                 `}
             </Script>
 
