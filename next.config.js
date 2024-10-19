@@ -1,7 +1,7 @@
 // next.config.js
 
 /** @type {import('next').NextConfig} */
-const url = 'https://toplole.com';
+const url = 'https://creativevistahub.online';
 
 const nextConfig = {
   env: {
